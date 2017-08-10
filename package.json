@@ -1,0 +1,35 @@
+{
+  "name": "node-sauce-connect-cron",
+  "version": "1.0.0",
+  "description": "Auto updater for node-sauce-connect",
+  "main": "update-version.js",
+  "repository": "https://github.com/ballwood/node-sauce-connect-cron.git",
+  "licenses": [
+    {
+      "type": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  ],
+  "author": {
+    "name": "Barry Allwood",
+    "email": "ballwood@users.noreply.github.com",
+    "url": "https://github.com/ballwood/"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-chai-friendly": "^0.2.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3"
+  },
+  "scripts": {
+    "update": "node update-version.js",
+    "lint": "eslint **/*.js"
+  }
+}
