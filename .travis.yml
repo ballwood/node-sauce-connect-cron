@@ -5,6 +5,9 @@ node_js:
 os:
 - linux
 fast_finish: true
-install: 'npm install --ignore-scripts'
+install: 'npm install'
 script:
-- node update-version.js
+- ./run.sh
+global:
+  - ENCRYPTION_LABEL: "openssl aes-256-cbc -K $encrypted_2610d76ecfd3_key -iv $encrypted_2610d76ecfd3_iv -in deploy_key.enc -out deploy_key -d"
+  - COMMIT_AUTHOR_EMAIL: "node-sauce-connect-cron@users.noreply.github.com"

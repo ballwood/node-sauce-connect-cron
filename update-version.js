@@ -119,7 +119,7 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
     newManifest[key] = pick(newManifest[key], ['download_url', 'sha1']);
   });
 
-  const manifestFilename = path.join(__dirname, config.checkoutDir, 'manifest.json');;
+  const manifestFilename = path.join(__dirname, config.checkoutDir, 'manifest.json');
   const manifestContents = JSON.stringify(newManifest, null, 2);
 
   packageJson.version = parsedBody['Sauce Connect'].version;
@@ -128,13 +128,13 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
   const packageContents = JSON.stringify(packageJson, null, 2);
 
   writeFile(manifestFilename, manifestContents)
-  .then(() => writeFile(packageFilename, packageContents))
-  .then(() => {
+  .then(writeFile.bind(this, packageFilename, packageContents))
+  .then(function () {
     createNewBranch(config.checkoutDir, version);
     checkoutBranch(config.checkoutDir, version);
     commitAll(config.checkoutDir, `node-sauce-connect-cron: updating to ${version}`);
     pushBranch(config.checkoutDir, version);
-  }).catch((err) => {
+  }).catch(function (err) {
     console.log(err);
     process.exit(1);
   });
