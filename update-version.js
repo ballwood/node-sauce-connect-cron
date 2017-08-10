@@ -130,8 +130,10 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
   console.log('Writing version.js with:', version);
 
   if (gitBranchExists(config.gitUrl, version)) {
-    // make commits to original branch if theres been updates
+    // make commits to original branch if there's been updates
     checkoutBranch(config.checkoutDir, version);
+  } else {
+    createNewBranch(config.checkoutDir, version);
   }
 
   var newManifest = parsedBody['Sauce Connect'];
@@ -156,8 +158,6 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
   writeFile(manifestFilename, manifestContents)
   .then(writeFile.bind(this, packageFilename, packageContents))
   .then(function () {
-    createNewBranch(config.checkoutDir, version);
-    checkoutBranch(config.checkoutDir, version);
 
     if (!changesExist(config.checkoutDir, version)) {
       console.log('No new changes detected, exiting');
