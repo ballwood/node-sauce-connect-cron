@@ -147,6 +147,8 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
     checkoutBranch(config.checkoutDir, version);
     commitAll(config.checkoutDir, `node-sauce-connect-cron: updating to ${version}`);
     pushBranch(config.checkoutDir, version);
+
+    console.log('Done.');
   }).catch(function (err) {
     console.log(err);
     process.exit(1);
