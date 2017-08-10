@@ -50,24 +50,37 @@ function gitBranchExists(repo, branchName) {
 }
 
 function checkoutBranch(workspace, branchName) {
-  cp.spawnSync('git', ['checkout', branchName], {
+  console.log('checking out branch: ' + branchName);
+  const result = cp.spawnSync('git', ['checkout', branchName], {
     cwd: workspace
   });
+  console.log(result.stdout.toString());
 }
 
 function commitAll(workspace, message) {
-  cp.spawnSync('git', ['add', '-A'], {
+  console.log('committing new files');
+
+  const addResult = cp.spawnSync('git', ['add', '-A'], {
     cwd: workspace
   });
-  cp.spawnSync('git', ['commit', '-m', message], {
+
+  console.log(addResult.stdout.toString());
+
+  const commitResult = cp.spawnSync('git', ['commit', '-m', message], {
     cwd: workspace
   });
+
+  console.log(commitResult.stdout.toString());
 }
 
 function pushBranch(workspace, branchName) {
-  cp.spawnSync('git', ['push', 'origin', branchName], {
+  console.log('pushing ' + branchName + ' to origin');
+
+  const result = cp.spawnSync('git', ['push', 'origin', branchName], {
     cwd: workspace
   });
+
+  console.log(result.stdout.toString());
 }
 
 request('https://saucelabs.com/versions.json', function (error, response, body) {
