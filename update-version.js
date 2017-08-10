@@ -57,6 +57,19 @@ function checkoutBranch(workspace, branchName) {
   console.log(result.stdout.toString());
 }
 
+function changesExist(workspace, branchName) {
+  const result = cp.spawnSync('git', ['diff', 'origin/' + branchName, '--exit-code'], {
+    cwd: workspace
+  });
+
+  if (result.status === 0) {
+    return false;
+  }
+
+  return true;
+
+}
+
 function commitAll(workspace, message) {
   console.log('committing new files');
 
@@ -145,6 +158,14 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
   .then(function () {
     createNewBranch(config.checkoutDir, version);
     checkoutBranch(config.checkoutDir, version);
+
+    if (!changesExist(config.checkoutDir, version)) {
+      console.log('No new changes detected, exiting');
+      process.exit(0);
+    } else {
+      console.log('Changes exist, updating')
+    }
+
     commitAll(config.checkoutDir, `node-sauce-connect-cron: updating to ${version}`);
     pushBranch(config.checkoutDir, version);
 
