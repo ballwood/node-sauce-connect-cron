@@ -159,6 +159,8 @@ request('https://saucelabs.com/versions.json', function (error, response, body) 
   .then(writeFile.bind(this, packageFilename, packageContents))
   .then(function () {
 
+    checkoutBranch(config.checkoutDir, version);
+
     if (!changesExist(config.checkoutDir, version)) {
       console.log('No new changes detected, exiting');
       process.exit(0);
